@@ -1,5 +1,5 @@
 import sys
-import mlflowexamples as me
+from mlflowexamples import NYorkTaxiFairPrediction
 
 if __name__ == '__main__':
     learning_rate = float(sys.argv[1]) if len(sys.argv) > 1 else 0.0001
@@ -12,7 +12,7 @@ if __name__ == '__main__':
                     "_model_dir": '/dbfs/tmp/models', "_activation_function": "relu",
                     "_checkpoints_steps": 5000, "_output_path": '/dbfs/mnt/blogs_pl/output1'}
 
-    nyt = me.NYorkTaxiFairPrediction.new_instance(input_params, input_data)
-    (experimentID, runID) = nyt.mlflow_run(me.NYorkTaxiFairPrediction.random_key(10))
+    nyt = NYorkTaxiFairPrediction.new_instance(input_params, input_data)
+    (experimentID, runID) = nyt.mlflow_run(NYorkTaxiFairPrediction.random_key(10))
     print(
         "MLflow Run for NYorkTaxiFairPrediction completed with run_id {} and experiment_id {}".format(runID, experimentID))
