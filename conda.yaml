@@ -5,6 +5,6 @@ dependencies:
 - pip
 - pip:
   - mlflow
-  - keras==2.3.1
-  - tensorflow==2.0.0
+  - keras==2.2.4-tf
+  - tensorflow==1.15.0
 name: mlflow-env
