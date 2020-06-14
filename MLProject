@@ -1,0 +1,10 @@
+name: tutorial
+
+conda_env: conda.yaml
+
+entry_points:
+  main:
+    parameters:
+      learning_rate: {type: float, default: 0.0001}
+      batch_size: {type: int, default: 512}
+    command: "python ny-taxi-predictions.py {learning_rate} {batch_size}"s
