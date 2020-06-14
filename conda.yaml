@@ -4,7 +4,7 @@ dependencies:
 - python=3.7.5
 - pip
 - pip:
-  - numpy
+  - numpy==1.16.2
   - pandas
   - mlflow
   - keras==2.2.4-tf
