@@ -8,7 +8,7 @@ dependencies:
 - pip:
   - mlflow
   - keras
-  - tensorflow
+  - tensorflow==1.15.0
   - sklearn
   - pyarrow
 name: mlflow-env
