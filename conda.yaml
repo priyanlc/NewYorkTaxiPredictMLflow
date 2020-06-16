@@ -10,4 +10,5 @@ dependencies:
   - keras
   - tensorflow
   - sklearn
+  - pyarrow
 name: mlflow-env
