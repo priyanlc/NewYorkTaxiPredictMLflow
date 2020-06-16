@@ -9,4 +9,5 @@ dependencies:
   - mlflow
   - keras
   - tensorflow
+  - sklearn
 name: mlflow-env
