@@ -10,7 +10,7 @@ if __name__ == '__main__':
     input_params = {"_learning_rate": learning_rate , "_steps": 100000, "_batch_size": steps, "_dataset_size": 4000000,
                     "_model_dir": '/dbfs/tmp/models', "_activation_function": "relu",
                     "_checkpoints_steps": 5000, "_output_path": '/dbfs/mnt/blogs_pl/output1'}
-    from mlflowexamples import NYorkTaxiFairPrediction
+    from mlflowexamples.NYorkTaxiFairPrediction import NYorkTaxiFairPrediction
     nyt = NYorkTaxiFairPrediction.new_instance(input_params, input_data)
     (experimentID, runID) = nyt.mlflow_run(NYorkTaxiFairPrediction.random_key(10))
     print(
