@@ -1,4 +1,4 @@
-name: tutorial
+name: ny-taxi-predict
 
 conda_env: conda.yaml
 

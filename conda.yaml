@@ -1,11 +1,11 @@
 channels:
-- default
+- defaults
 dependencies:
 - python=3.7.5
+- pandas
+- numpy
 - pip
 - pip:
-  - numpy==1.16.2
-  - pandas
   - mlflow
   - keras==2.2.4-tf
   - tensorflow==1.15.0
