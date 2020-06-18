@@ -14,7 +14,10 @@ from sklearn import preprocessing
 
 class NYorkTaxiFairPrediction:
     __slots__ = ['_params', '_data', '_learning_rate', '_steps', '_batch_size', '_dataset_size', '_model_dir',
-                 '_activation_function', '_train_sample', '_validate_sample', '_test_sample', '_summary_steps', '_checkpoints_steps', '_throttle_secs', '_output_path', '_test_pd_df', '_train_labels', '_validation_labels', '_train_df_scaled', '_validation_df_scaled', '_test_scaled', '_estimator', '_matrics', '_model'
+                 '_activation_function', '_train_sample', '_validate_sample', '_test_sample', '_summary_steps',
+                 '_checkpoints_steps', '_throttle_secs', '_output_path', '_test_pd_df', '_train_labels',
+                 '_validation_labels', '_train_df_scaled', '_validation_df_scaled', '_test_scaled', '_estimator',
+                 '_matrics', '_model'
                  ]
     """
     General class for NYorkTaxiFairPrediction
@@ -174,7 +177,8 @@ class NYorkTaxiFairPrediction:
 
     def create_model(self, activation_func='relu', learning_rate=0.0001):
         model = keras.models.Sequential()
-        model.add(keras.layers.Dense(256, activation=activation_func, input_shape=(self._train_df_scaled.shape[1],), name='raw'))
+        model.add(keras.layers.Dense(256, activation=activation_func, input_shape=(self._train_df_scaled.shape[1],),
+                                     name='raw'))
         model.add(keras.layers.BatchNormalization())
         model.add(keras.layers.Dense(128, activation=activation_func))
         model.add(keras.layers.BatchNormalization())
@@ -201,19 +205,17 @@ class NYorkTaxiFairPrediction:
 
         train_spec = tf.estimator.TrainSpec(input_fn=
                                             NYorkTaxiFairPrediction.input_function(self._train_df_scaled,
-                                                                                       self._train_labels, True),
+                                                                                   self._train_labels, True),
                                             max_steps=self._steps)
         eval_spec = tf.estimator.EvalSpec(input_fn=
                                           NYorkTaxiFairPrediction.input_function(self._validation_df_scaled,
-                                                                                     self._validation_labels, True),
+                                                                                 self._validation_labels, True),
                                           steps=self._steps, throttle_secs=300)
 
         _matrics = tf.estimator.train_and_evaluate(_estimator, train_spec=train_spec, eval_spec=eval_spec)
 
         self._estimator = _estimator
         self._matrics = _matrics
-        print("*" * 100)
-        print(_matrics)
 
     def predict(self):
         prediction = self._estimator.predict(NYorkTaxiFairPrediction.input_function(self._test_scaled))
@@ -221,16 +223,14 @@ class NYorkTaxiFairPrediction:
         _predictions = prediction_df.to_numpy()
         NYorkTaxiFairPrediction.save_output(self._test_pd_df, prediction_df, 'fare_amount', self._output_path)
 
-    def mlflow_run(self, r_name='test'):
+    def mlflow_run(self, name='test'):
         """
-        This method trains, computes metrics, and logs all metrics, parameters,
-        and artifacts for the current run using the MLflow APIs
-        :param r_name: Name of the run as logged by MLflow
-        :return: MLflow Tuple (ExperimentID, runID)
+        :param name: Name of the run to be logged by MLflow
+        :return: Tuple (ExperimentID, runID)
         """
 
-        with mlflow.start_run(run_name=r_name) as run:
-            # get current run and experiment id
+        with mlflow.start_run(run_name=name) as run:
+            # retrieve current run and experiment id
             runID = run.info.run_uuid
             experimentID = run.info.experiment_id
 
@@ -255,8 +255,6 @@ class NYorkTaxiFairPrediction:
             mlflow.log_metric("rmse", rmse)
             mlflow.keras.log_model(self.model, "Keras_model for NY-Taxi dataset")
 
-            # print some data
-            print("-" * 100)
             print("Inside MLflow Run with run_id {} and experiment_id {}".format(runID, experimentID))
             print('Mean Absolute Error    :', mae)
             print('Mean Squared Error     :', mse)
